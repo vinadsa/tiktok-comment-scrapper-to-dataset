@@ -1,23 +1,22 @@
+
+# tiktok-comment-scrapper-to-dataset
+Scrapes Tiktok comments from a Tiktok video id. A working and improved version from RomySihananda's tiktok-comment-scrapper.
 [![Twitter: romy](https://img.shields.io/twitter/follow/RomySihananda)](https://twitter.com/RomySihananda)
 
-# tiktok-comment-scrapper
-
-![](https://raw.githubusercontent.com/RomySaputraSihananda/RomySaputraSihananda/main/images/GA-U-u2bsAApmn9.jpeg)
-Get all comments from tiktok video url or id
 
 ## Requirements
 
 - **Python >= 3.11.4**
-- **Requests >= 2.31.0**
+- **Requests >= 2.32.3**
 
 ## Installation
 
 ```sh
-# Clonig Repository
-git clone https://github.com/romysaputrasihananda/tiktok-comment-scrapper
+# Cloning Repository
+git clone https://github.com/vinadsa/tiktok-comment-scrapper-to-dataset
 
 # Change Directory
-cd tiktok-comment-scrapper
+cd tiktok-comment-scrapper-to-dataset
 
 # Install Requirement
 pip install -r requirements.txt
@@ -26,7 +25,7 @@ pip install -r requirements.txt
 ## Example Usages
 
 ```sh
-python main.py --url=7170139292767882522 --size=10 --output=data
+python main.py --url=7511092308184681771 --output=data     
 ```
 
 ### Flags
@@ -34,12 +33,8 @@ python main.py --url=7170139292767882522 --size=10 --output=data
 | Flag     | Alias |           Description           | Example         |       Default       |
 | :------- | :---: | :-----------------------------: | :-------------- | :-----------------: |
 | --url    |  -u   | Url or video id of tiktok video | --url=id or url | 7170139292767882522 |
-| --size   |  -s   |       number of comments        | --size=10       |         50          |
 | --output |  -o   |      json file output path      | --output=data   |        data         |
 
-## Sample Output
-
-![](https://raw.githubusercontent.com/RomySaputraSihananda/RomySaputraSihananda/main/images/Screenshot_20231211_001804.png)
 
 ```json
 {
