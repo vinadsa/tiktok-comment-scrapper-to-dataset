@@ -1,8 +1,5 @@
-
 # tiktok-comment-scrapper-to-dataset
 Scrapes Tiktok comments from a Tiktok video id. A working and improved version from RomySihananda's tiktok-comment-scrapper.
-[![Twitter: romy](https://img.shields.io/twitter/follow/RomySihananda)](https://twitter.com/RomySihananda)
-
 
 ## Requirements
 
@@ -18,14 +15,17 @@ git clone https://github.com/vinadsa/tiktok-comment-scrapper-to-dataset
 # Change Directory
 cd tiktok-comment-scrapper-to-dataset
 
-# Install Requirement
+# Install Requirements
 pip install -r requirements.txt
 ```
 
 ## Example Usages
 
 ```sh
-python main.py --url=7511092308184681771 --output=data     
+python main.py --url=7511092308184681771 --output=data
+python main.py --url=7507084128119016709 --output=data
+python main.py --url=7507084128119016709 --output=data --limit=50 # limit to 50 comments
+python main.py --url=7511092308184681771 --limit=100 # limit to 100 comments, default output
 ```
 
 ### Flags
@@ -34,6 +34,7 @@ python main.py --url=7511092308184681771 --output=data
 | :------- | :---: | :-----------------------------: | :-------------- | :-----------------: |
 | --url    |  -u   | Url or video id of tiktok video | --url=id or url | 7170139292767882522 |
 | --output |  -o   |      json file output path      | --output=data   |        data         |
+| --limit  |  -l   | Maximum number of comments to scrape | --limit=100 | No limit (scrape all) |
 
 
 ```json

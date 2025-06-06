@@ -35,11 +35,19 @@ class Comments:
     ) -> List[Comment]:
         return self._comments
     
+    @comments.setter
+    def comments(self: 'Comments', value: List[Comment]) -> None:
+        self._comments = value
+    
     @property
     def has_more(
         self: 'Comments'
     ) -> int:
         return self._has_more
+    
+    @has_more.setter
+    def has_more(self: 'Comments', value: int) -> None:
+        self._has_more = value
     
     @property
     def dict(

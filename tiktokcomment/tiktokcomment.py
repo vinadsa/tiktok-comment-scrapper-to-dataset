@@ -1,9 +1,8 @@
 import jmespath
 
-from typing import Any, Dict, Iterator
+from typing import Any, Dict, Iterator, Optional
 from requests import Session, Response
 from loguru import logger
-from typing import Optional
 from datetime import datetime
 from tiktokcomment.typing import Comments, Comment
 
@@ -93,26 +92,49 @@ class TiktokComment:
     
     def get_all_comments(
         self: 'TiktokComment',
-        aweme_id: str
+        aweme_id: str,
+        limit: Optional[int] = None
     ) -> Comments:
         page: int = 1
         data: Comments = self.get_comments(
             aweme_id=aweme_id,
             page=page   
         )
-        while(True):
+
+        if not data.comments:
+            data.has_more = False
+            return data
+
+        if limit is not None and len(data.comments) >= limit:
+            data.comments = data.comments[:limit]
+            data.has_more = False
+            return data
+
+        while(data.has_more):
             page += 1
             
-            comments: Comments = self.get_comments(
+            comments_on_page: Comments = self.get_comments(
                 aweme_id=aweme_id,
                 page=page
             )
-            if(not comments.has_more): break
+            
+            if not comments_on_page.comments:
+                data.has_more = False
+                break
 
             data.comments.extend(
-                comments.comments
+                comments_on_page.comments
             )
+            data.has_more = comments_on_page.has_more
 
+            if limit is not None and len(data.comments) >= limit:
+                data.comments = data.comments[:limit]
+                data.has_more = False
+                break
+        
+        if limit is not None and len(data.comments) >= limit:
+            data.has_more = False
+            
         return data
 
     def get_comments(
@@ -156,8 +178,10 @@ class TiktokComment:
     
     def __call__(
         self: 'TiktokComment',
-        aweme_id: str
+        aweme_id: str,
+        limit: Optional[int] = None
     ) -> Comments:
         return self.get_all_comments(
-            aweme_id=aweme_id
+            aweme_id=aweme_id,
+            limit=limit
         )

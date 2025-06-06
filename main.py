@@ -30,9 +30,16 @@ __version__ = '2.1.0'
     default='data/',
     help='Directory for output data (JSON and CSV)'
 )
+@click.option(
+    "--limit",
+    type=int,
+    default=None,  # Default to no limit
+    help='Maximum number of comments to scrape. If not set, all comments will be scraped.'
+)
 def main(
     url: str,
-    output: str
+    output: str,
+    limit: int | None # Added limit parameter
 ):
     aweme_id_match = re.search(r"(\d{18,20})", url)
     if aweme_id_match:
@@ -47,14 +54,16 @@ def main(
         return
 
     logger.info(f'Start scrap comments for video ID: {aweme_id}')
+    if limit is not None:
+        logger.info(f'Scraping will be limited to {limit} comments.')
 
     try:
         scraper_instance = TiktokComment()
         
-        scraped_data_object: Comments = scraper_instance(aweme_id=aweme_id)
+        scraped_data_object: Comments = scraper_instance(aweme_id=aweme_id, limit=limit)
 
-        if not scraped_data_object or not hasattr(scraped_data_object, 'dict'):
-            logger.error(f"Scraping failed or returned no data for video ID: {aweme_id}")
+        if not scraped_data_object or not hasattr(scraped_data_object, 'dict') or not scraped_data_object.comments:
+            logger.error(f"Scraping failed, returned no data, or no comments found for video ID: {aweme_id}")
             return
 
         scraped_dict_for_json = scraped_data_object.dict 
